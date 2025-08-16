@@ -1,67 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Image-Based Invitation</title>
-  <style>
-    /* reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow: hidden; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nethmini & Isuru Wedding Invitation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* HOME PAGE */
-    .home-page {
-      width: 100vw; 
-      height: 100vh;
-      background: url('./images/v3_53.png') 
-                  center center / cover no-repeat;
-      position: relative;
-      cursor: pointer;
-    }
-    .home-page::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background: url('./images/v10_43.png') 
-                  center center / contain no-repeat;
-    }
+        body {
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
 
-    /* WEDDING PAGE */
-    .wedding-page {
-      display: none;
-      width: 100vw;
-      min-height: 100vh;
-      background: url('./images/v10_43.png')
-                  center top / contain no-repeat;
-    }
+        /* Home Page */
+        .home-page {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('./images/v3_53.png') center center/cover no-repeat;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-    /* CARD FRONT AS A FULL-WIDTH DIV */
-    .wedding-page .card-front {
-      width: 100%;
-      /* Maintain aspect ratio if needed; adjust padding-bottom to match image's ratio */
-      padding-bottom: 56.25%;  
-      background: url('./images/wedding\ card\ side\ 2.jpg')
-                  center center / cover no-repeat;
-    }
-  </style>
+        .home-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('./images/v10_41.png') center center/contain no-repeat;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .envelope-container {
+            position: relative;
+            animation: pulse 2s ease-in-out infinite;
+            display: none; /* Hide the envelope since we're using your images */
+        }
+
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(145deg, #8B9467, #9BA670);
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transform-style: preserve-3d;
+            transition: all 0.6s ease;
+        }
+
+        .envelope:hover {
+            transform: rotateY(10deg) rotateX(5deg) scale(1.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(145deg, #9BA670, #A8B377);
+            clip-path: polygon(0 0, 50% 70%, 100% 0);
+            border-radius: 10px 10px 0 0;
+            transform-origin: top center;
+            animation: flapOpen 3s ease-in-out infinite;
+        }
+
+        .invitation-peek {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 40px;
+            background: #f8f8f8;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .couple-names {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .wedding-text {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .click-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 16px;
+            animation: bounce 2s infinite;
+            opacity: 0.8;
+        }
+
+        /* Main Wedding Page */
+        .wedding-page {
+            display: none;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .wedding-card {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .card-front {
+            background: url('./images/v10_43.png') center center/cover no-repeat;
+            border-radius: 20px;
+            padding: 60px 40px
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            animation: slideInUp 1s ease-out;
+            min-height: 600px;
+        }
+
+        .card-front::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="botanical" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M25 10 Q30 5 35 10 Q30 15 25 10" fill="%23d4af37" opacity="0.1"/><circle cx="40" cy="30" r="2" fill="%23d4af37" opacity="0.15"/></pattern></defs><rect width="100" height="100" fill="url(%23botanical)"/></svg>');
+            pointer-events: none;
+        }
+
+
+        /* Second Card (Location Guide) */
+        .card-back {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin-top: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInUp 1s ease-out 0.5s forwards;
+        }
+
+ 
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes flapOpen {
+            0%, 100% { transform: rotateX(0deg); }
+            50% { transform: rotateX(-15deg); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .envelope {
+                width: 250px;
+                height: 160px;
+            }
+            
+            .couple-names {
+                font-size: 20px;
+            }
+            
+            .wedding-card {
+                padding: 20px 10px;
+            }
+            
+            .card-front, .card-back {
+                padding: 40px 20px;
+            }
+            
+            .bride-groom {
+                font-size: 28px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Home cover: click to reveal -->
-  <div class="home-page" id="homePage"></div>
+    <!-- Home Page -->
+    <div class="home-page" id="homePage">
+        <div class="envelope-container">
+            <div class="envelope">
+                <div class="envelope-flap"></div>
+                <div class="invitation-peek">
+                    <div class="couple-names">N & I</div>
+                    <div class="wedding-text">Wedding Invitation</div>
+                </div>
+            </div>
+        </div>
+        <div class="click-hint">Click to open invitation ✨</div>
+    </div>
 
-  <!-- Invitation detail page -->
-  <div class="wedding-page" id="weddingPage">
-    <div class="card-front"></div>
-  </div>
+    <!-- Wedding Page -->
+    <div class="wedding-page" id="weddingPage">
+        <div class="wedding-card">
+            <!-- Card Front -->
+            <div class="card-front">
+                <div class="monogram">
+                    <div class="monogram-text">N&I</div>
+                </div>
+                
+                <div class="bride-groom">
+                    NETHMINI<span class="ampersand">&</span>ISURU
+                </div>
+                
+                <div class="invitation-text">
+                    Together with their parents,<br>
+                    Mr & Mrs Perera and Mr & Mrs Thilakaratne<br>
+                    Request the honour of your presence<br>
+                    at their daughter, Nethmini and son, Isuru<br>
+                    <strong>Wedding Reception</strong>
+                </div>
+                
+                <div class="event-details">
+                    <div class="date">06th of November 2025</div>
+                    <div class="time-venue">
+                        from 10.00 am onwards<br>
+                        at Camelia Hall - Sawingir Hills<br>
+                        under the table no ............
+                    </div>
+                </div>
+                
+                <div class="rsvp-section">
+                    <strong>RSVP (Regrets only)</strong><br>
+                    Achala - 0763738302
+                </div>
+            </div>
+            
+            <!-- Card Back -->
+            <div class="card-back">
+                <div class="location-title">Location Guide</div>
+                
+                <div class="qr-placeholder">
+                    QR Code<br>
+                    (Scan for directions)
+                </div>
+                
+                <p style="text-align: center; margin: 20px 0; font-style: italic;">
+                    Scan and pin the QR code<br>
+                    To take you easily for our biggest day.
+                </p>
+                
+                <div class="map-section">
+                    <div style="text-align: center; color: #666; margin-bottom: 15px;">
+                        <strong>Directions:</strong><br>
+                        Kottawa → Cooray Waththa Rd → 3.2km Gonapola-Thalagala Road<br>
+                        Kahathuduwa Interchange → Gonapola Junction<br>
+                        4.8km Colombo - Horana Main road
+                    </div>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-title">Details</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-icon">🏛️</div>
+                        <div class="timeline-content">
+                            <div class="timeline-event">PORUWA CEREMONY</div>
+                            <div class="timeline-time">10 - 10.45 AM</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-icon">📝</div>
+                        <div class="timeline-content">
+                            <div class="timeline-event">REGISTRATION</div>
+                            <div class="timeline-time">11 - 11.30 AM</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-icon">📸</div>
+                        <div class="timeline-content">
+                            <div class="timeline-event">PICTORIAL</div>
+                            <div class="timeline-time">11.30 AM</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-icon">🍽️</div>
+                        <div class="timeline-content">
+                            <div class="timeline-event">LUNCH</div>
+                            <div class="timeline-time">12 - 2 PM</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-icon">🎭</div>
+                        <div class="timeline-content">
+                            <div class="timeline-event">ENTERTAINMENT</div>
+                            <div class="timeline-time">2.30 - 3.45 PM</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-icon">👋</div>
+                        <div class="timeline-content">
+                            <div class="timeline-event">GOING AWAY</div>
+                            <div class="timeline-time">4 PM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <script>
-    const home = document.getElementById('homePage');
-    const wedding = document.getElementById('weddingPage');
+    <script>
+        document.getElementById('homePage').addEventListener('click', function() {
+            // Hide home page
+            this.style.transform = 'scale(1.1)';
+            this.style.opacity = '0';
+            
+            setTimeout(() => {
+                this.style.display = 'none';
+                document.getElementById('weddingPage').style.display = 'block';
+                
+                // Smooth scroll to top
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }, 600);
+        });
 
-    home.addEventListener('click', () => {
-      home.style.display = 'none';
-      wedding.style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  </script>
+        // Add smooth scrolling behavior
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add parallax effect to background
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                
+                const cards = document.querySelectorAll('.card-front, .card-back');
+                cards.forEach(card => {
+                    card.style.transform = `translateY(${rate * 0.1}px)`;
+                });
+            });
+        });
+    </script>
 </body>
 </html>
