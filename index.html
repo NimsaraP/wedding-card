@@ -31,7 +31,7 @@
             transition: all 0.3s ease;
         }
 
-        .home-page::before {
+     /*   .home-page::before {
             content: '';
             position: absolute;
             top: 0;
@@ -40,12 +40,31 @@
             bottom: 0;
             background: url('./images/v10_41.png') center center/contain no-repeat;
             animation: float 6s ease-in-out infinite;
-        }
+        } */
+
+        /* OPTION 2: Use percentage with aspect ratio control */
+.home-page::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    width: 15vw;                 /* 15% of viewport width */
+    height: 30vh;                /* 30% of viewport height */
+    min-width: 150px;            /* Minimum width */
+    max-width: 250px;            /* Maximum width */
+    min-height: 300px;           /* Minimum height */
+    max-height: 500px;           /* Maximum height */
+    transform: translate(-50%, -50%);
+    background: url('./images/v10_41.png') center center/cover no-repeat;
+    animation: float 6s ease-in-out infinite;
+      }
 
         .envelope-container {
             position: relative;
             animation: pulse 1s ease-in-out infinite;
-            display: block; /* Hide the envelope since we're using your images */
+            display: none; /* Hide the envelope since we're using your images */
         }
 
         .envelope {
