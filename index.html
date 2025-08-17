@@ -43,7 +43,7 @@
         } */
 
         /* OPTION 2: Use percentage with aspect ratio control */
-.home-page::before {
+/*.home-page::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -59,7 +59,22 @@
     transform: translate(-50%, -50%);
     background: url('./images/v10_41.png') center center/cover no-repeat;
     animation: float 6s ease-in-out infinite;
-      }
+      }  */
+
+        /* OPTION 1: Control exact dimensions */
+.home-page::before {
+    content: '';
+    position: absolute;
+    top: 50%;                    /* Center vertically */
+    left: 50%;                   /* Center horizontally */
+    right: auto;                 /* Remove right positioning */
+    bottom: auto;                /* Remove bottom positioning */
+    width: 200px;                /* Set specific width (smaller) */
+    height: 400px;               /* Set specific height (taller than width) */
+    transform: translate(-50%, -50%); /* Center the image */
+    background: url('./images/v10_41.png') center center/cover no-repeat;
+    animation: float 6s ease-in-out infinite;
+}
 
         .envelope-container {
             position: relative;
