@@ -31,7 +31,7 @@
             transition: all 0.3s ease;
         }
 
-       .home-page::before {
+        .home-page::before {
             content: '';
             position: absolute;
             top: 0;
@@ -40,24 +40,21 @@
             bottom: 0;
             background: url('./images/v10_41.png') center center/contain no-repeat;
             animation: float 6s ease-in-out infinite;
-        } 
+        }
 
-
-
-
-       /* .envelope-container {
+        .envelope-container {
             position: relative;
             animation: pulse 1s ease-in-out infinite;
             display: none; /* Hide the envelope since we're using your images */
-        } */
+        }
 
         .envelope {
-            width: 120px;
-            height: 180px;
+            width: 200px;
+            height: 600px;
             background: linear-gradient(145deg, #8B9467, #9BA670);
             position: relative;
-            border-radius: 8px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             transform-style: preserve-3d;
             transition: all 0.3s ease; /* Hover: 0.6s → 0.3s (2x faster) */
         }
@@ -71,8 +68,8 @@
             position: absolute;
             top: -1px;
             left: 0;
-            width: 120px;
-            height: 60px;
+            width: 200px;
+            height: 600px;
             background: linear-gradient(145deg, #9BA670, #A8B377);
             clip-path: polygon(0 0, 50% 70%, 100% 0);
             border-radius: 8px 8px 0 0;
@@ -82,10 +79,10 @@
 
         .invitation-peek {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            bottom: 25px;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 40px;
             background: #f8f8f8;
             border-radius: 5px;
             display: flex;
@@ -223,24 +220,12 @@
         /* Responsive */
         @media (max-width: 768px) {
             .envelope {
-                width: 100px;
-                height: 150px;
+                width: 250px;
+                height: 160px;
             }
-
-            .envelope-flap {
-        width: 100px;    /* Match mobile envelope width */
-        height: 50px;    /* Proportional flap height */
-            }
-
-            .invitation-peek {
-        top: 12px;
-        left: 12px;
-        right: 12px;
-        bottom: 20px;
-           }
             
             .couple-names {
-                font-size: 16px;
+                font-size: 20px;
             }
             
             .wedding-card {
