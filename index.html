@@ -41,18 +41,28 @@
             pointer-events: none;
         }
 
-        /* Home Page */
+        /* Home Page - Fixed to center and fit screen properly */
         .home-page {
             width: 100vw;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: url('./images/welcomepage.jpg') center center/cover no-repeat;
+            background: url('./images/welcomepage.jpg') center center no-repeat;
+            background-size: cover;
             position: relative;
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s ease;
+        }
+
+        /* Mobile Safari specific fix */
+        @supports (-webkit-touch-callout: none) {
+            .home-page {
+                min-height: 100vh;
+                min-height: -webkit-fill-available;
+                background-attachment: scroll;
+            }
         }
 
         .home-page::before {
