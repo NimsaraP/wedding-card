@@ -45,23 +45,29 @@
         .home-page {
             width: 100vw;
             height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: url('./images/welcomepage.jpg') center center no-repeat;
+            background-image: url('./images/welcomepage.jpg');
+            background-position: center center;
+            background-repeat: no-repeat;
             background-size: cover;
+            background-attachment: fixed;
             position: relative;
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        /* Mobile Safari specific fix */
-        @supports (-webkit-touch-callout: none) {
+        /* Mobile and tablet specific fixes */
+        @media (max-width: 1024px) {
             .home-page {
+                background-attachment: scroll;
                 min-height: 100vh;
                 min-height: -webkit-fill-available;
-                background-attachment: scroll;
+                height: 100vh;
+                height: -webkit-fill-available;
             }
         }
 
@@ -135,7 +141,7 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-             color: #8B8000;
+            color: #8B8000;
             font-size: 16px;
             animation: bounce 2s infinite;
             opacity: 0.8;
@@ -202,6 +208,7 @@
             40% { transform: translateX(-50%) translateY(-10px); }
             60% { transform: translateX(-50%) translateY(-5px); }
         }
+        
         @keyframes slideInUp {
             from {
                 opacity: 0;
