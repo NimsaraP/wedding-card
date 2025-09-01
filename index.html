@@ -81,12 +81,12 @@
             border-radius: 10px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             transform-style: preserve-3d;
-            transition: all 0.3s ease; /* Hover: 0.6s → 0.3s (2x faster) */
+            transition: all 0.15s ease; /* Much faster and more responsive */
         }
 
         .envelope:hover {
-            transform: rotateY(10deg) rotateX(5deg) scale(1.05);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            transform: rotateY(15deg) rotateX(8deg) scale(1.1);
+            box-shadow: 0 35px 70px rgba(0,0,0,0.5);
         }
 
         .envelope-flap {
@@ -99,7 +99,7 @@
             clip-path: polygon(0 0, 50% 70%, 100% 0);
             border-radius: 8px 8px 0 0;
             transform-origin: top center;
-            animation: flapOpen 1.5s ease-in-out infinite; /* Flap: 3s → 1.5s (2x faster) */
+            animation: flapOpen 0.8s ease-in-out infinite; /* Much faster and more noticeable */
         }
 
         .invitation-peek {
