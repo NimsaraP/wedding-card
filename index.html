@@ -41,34 +41,21 @@
             pointer-events: none;
         }
 
-        /* Home Page - Fixed to center and fit screen properly */
+        /* Home Page */
         .home-page {
             width: 100vw;
             height: 100vh;
-            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-image: url('./images/welcomepage.jpg');
-            background-position: center center;
-            background-repeat: no-repeat;
+            background: url('./images/welcomepage.jpg');
+            background-position: center;
             background-size: cover;
-            background-attachment: fixed;
+            background-repeat: no-repeat;
             position: relative;
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s ease;
-        }
-
-        /* Mobile and tablet specific fixes */
-        @media (max-width: 1024px) {
-            .home-page {
-                background-attachment: scroll;
-                min-height: 100vh;
-                min-height: -webkit-fill-available;
-                height: 100vh;
-                height: -webkit-fill-available;
-            }
         }
 
         .home-page::before {
@@ -141,7 +128,7 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            color: #8B8000;
+             color: #8B8000;
             font-size: 16px;
             animation: bounce 2s infinite;
             opacity: 0.8;
@@ -208,7 +195,6 @@
             40% { transform: translateX(-50%) translateY(-10px); }
             60% { transform: translateX(-50%) translateY(-5px); }
         }
-        
         @keyframes slideInUp {
             from {
                 opacity: 0;
