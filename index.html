@@ -135,7 +135,7 @@
 
         .click-hint {
             position: absolute;
-            bottom: 30px;
+            bottom: 150px; /* Moved from 30px to 150px - closer to the envelope/card */
             left: 50%;
             transform: translateX(-50%);
              color: #8B8000;
@@ -297,6 +297,10 @@
                 padding: 40px 20px;
                 min-height: 470px;
             }
+            
+            .click-hint {
+                bottom: 120px; /* Adjusted for mobile - closer to card */
+            }
         }
 
         /* Cross-browser Mobile Responsive - Standard Mobile */
@@ -328,6 +332,10 @@
             .card-front, .card-back {
                 min-height: 400px;
             }
+            
+            .click-hint {
+                bottom: 100px; /* Adjusted for mobile - closer to card */
+            }
         }
 
         /* Chrome Android specific - Standard Androids */
@@ -352,7 +360,7 @@
             }
             
             .click-hint {
-                bottom: 60px; /* Move higher to avoid Chrome address bar */
+                bottom: 90px; /* Adjusted for mobile - closer to card */
                 font-size: 14px;
             }
         }
@@ -373,6 +381,10 @@
             .home-page::before {
                 width: 360px; /* Increased from 280px */
                 height: 360px; /* Increased from 280px */
+            }
+            
+            .click-hint {
+                bottom: 95px; /* Adjusted for mobile - closer to card */
             }
         }
 
@@ -395,7 +407,7 @@
             }
             
             .click-hint {
-                bottom: 50px;
+                bottom: 80px; /* Adjusted for mobile - closer to card */
                 font-size: 13px;
             }
         }
@@ -420,7 +432,7 @@
             }
             
             .click-hint {
-                bottom: 20px;
+                bottom: 40px; /* Adjusted for landscape - closer to card */
                 font-size: 12px;
             }
         }
