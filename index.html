@@ -45,6 +45,7 @@
         .home-page {
             width: 100vw;
             height: 100vh;
+            height: 100dvh; /* Dynamic viewport height for modern browsers */
             /* Cross-browser viewport fixes */
             min-height: -webkit-fill-available; /* Safari */
             min-height: fill-available; /* Chrome/Firefox */
@@ -61,6 +62,8 @@
             background-attachment: scroll;
             -webkit-background-size: cover;
             background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
         }
 
         .home-page::before {
@@ -73,6 +76,7 @@
             height: 450px;
             background: url('./images/card.png') center center/contain no-repeat;
             animation: float 6s ease-in-out infinite;
+            z-index: 2;
         }
 
         .envelope-container {
