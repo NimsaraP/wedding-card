@@ -53,11 +53,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: url('./images/frontpage2.jpg') center center no-repeat;
+            background: url('./images/frontpage1.jpg') center center no-repeat;
             background-size: cover;
-            background-position: center top;
-            position: absolute;
-            top: -82px; /* Offset by Safari top UI to show full image */
+            background-position: center center;
+            position: relative;
+            top: 0; /* Keep at normal position - no cutting off top */
             left: 0;
             overflow: hidden;
             cursor: pointer;
@@ -70,7 +70,7 @@
         .home-page::before {
             content: '';
             position: absolute;
-            top: calc(50% + 41px); /* Center within the 1015px visible area (half of 82px offset) */
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 300px;
