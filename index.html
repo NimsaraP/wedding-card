@@ -2,19 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Wedding Invitation</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Georgia', serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Georgia', serif;
             overflow-x: hidden;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            position: relative;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Loading Screen */
@@ -41,23 +46,31 @@
             pointer-events: none;
         }
 
-        /* Home Page - Safari Mobile Optimized */
+        /* Home Page - Mobile Optimized */
         .home-page {
             width: 100vw;
             height: 100vh;
-            /* Safari mobile viewport fixes */
-            min-height: -webkit-fill-available;
+            height: 100dvh; /* Dynamic viewport height for mobile */
             display: flex;
             align-items: center;
             justify-content: center;
-            background: url('./images/frontpage1.jpg') center center/cover no-repeat;
+            background: url('./images/frontpage1.jpg') center center no-repeat;
+            background-size: cover;
+            background-attachment: scroll; /* Changed from fixed for mobile compatibility */
             position: relative;
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s ease;
-            /* Safari mobile background fixes */
-            background-attachment: scroll;
-            -webkit-background-size: cover;
+            /* Ensure full coverage on mobile */
+            min-height: -webkit-fill-available;
+        }
+
+        /* iOS Safari specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .home-page {
+                min-height: -webkit-fill-available;
+                height: -webkit-fill-available;
+            }
         }
 
         .home-page::before {
@@ -66,16 +79,18 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 450px;
-            height: 450px;
-            background: url('./images/card.png') center center/contain no-repeat;
+            width: min(450px, 80vw);
+            height: min(450px, 80vw);
+            background: url('./images/card.png') center center no-repeat;
+            background-size: contain;
             animation: float 6s ease-in-out infinite;
+            will-change: transform; /* Optimize for mobile animations */
         }
 
         .envelope-container {
             position: relative;
             animation: pulse 1s ease-in-out infinite;
-            display: none; /* Hide the envelope since we're using your images */
+            display: none;
         }
 
         .envelope {
@@ -86,7 +101,7 @@
             border-radius: 10px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             transform-style: preserve-3d;
-            transition: all 0.1s ease; /* Even faster and more responsive */
+            transition: all 0.1s ease;
         }
 
         .envelope:hover {
@@ -104,7 +119,7 @@
             clip-path: polygon(0 0, 50% 70%, 100% 0);
             border-radius: 8px 8px 0 0;
             transform-origin: top center;
-            animation: flapOpen 0.6s ease-in-out infinite; /* Super fast and very noticeable */
+            animation: flapOpen 0.6s ease-in-out infinite;
         }
 
         .invitation-peek {
@@ -127,20 +142,25 @@
 
         .click-hint {
             position: absolute;
-            bottom: 30px;
+            bottom: max(30px, env(safe-area-inset-bottom, 30px));
             left: 50%;
             transform: translateX(-50%);
-             color: #8B8000;
+            color: #8B8000;
             font-size: 16px;
             animation: bounce 2s infinite;
             opacity: 0.8;
+            z-index: 10;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+            font-weight: 600;
         }
 
         /* Main Wedding Page */
         .wedding-page {
             display: none;
             min-height: 100vh;
+            min-height: 100dvh;
             background-color: #f5f5f5;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
         }
 
         .wedding-card {
@@ -149,11 +169,12 @@
             margin: 0 auto;
             padding: 40px 20px;
             position: relative;
-            box-sizing: border-box; 
+            box-sizing: border-box;
         }
 
         .card-front {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%), url('./images/side1.jpg') center center/cover no-repeat;
+            background: url('./images/side1.jpg') center center no-repeat;
+            background-size: cover;
             border-radius: 20px;
             padding: 60px 40px;
             text-align: center;
@@ -161,20 +182,19 @@
             position: relative;
             overflow: hidden;
             animation: slideInUp 1s ease-out;
-            min-height: 565px; /* Updated from 600px to accommodate 1240x1650 aspect ratio */
-            aspect-ratio: 1240/1650; /* Added aspect ratio for better consistency */
+            min-height: 600px;
         }
 
         .card-back {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%), url('./images/card\ side\ 2.jpg') center center/cover no-repeat;
+            background: url('./images/card\ side\ 2.jpg') center center no-repeat;
+            background-size: cover;
             border-radius: 20px;
             padding: 60px 40px;
             margin-top: 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.1);
             position: relative;
             overflow: hidden;
-            min-height: 565px; /* Updated from 600px to accommodate 1240x1650 aspect ratio */
-            aspect-ratio: 1240/1650; /* Added aspect ratio for better consistency */
+            min-height: 600px;
             animation: slideInUp 1s ease-out 0.5s forwards;
         }
 
@@ -186,15 +206,27 @@
             transform: translateX(-50%);
             cursor: pointer;
             text-decoration: none;
-            font-family: 'Georgia', serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Georgia', serif;
             color: #333;
             font-size: 16px;
             transition: opacity 0.3s ease;
             animation: linkBounce 2s ease-in-out infinite;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
-        .link-area:hover {
+        .link-area:hover,
+        .link-area:active {
             opacity: 0.7;
+            background: rgba(255,255,255,0.9);
+        }
+
+        /* Touch-friendly interactions */
+        .home-page:active {
+            transform: scale(0.98);
         }
 
         /* Animations */
@@ -218,6 +250,7 @@
             40% { transform: translateX(-50%) translateY(-10px); }
             60% { transform: translateX(-50%) translateY(-5px); }
         }
+
         @keyframes slideInUp {
             from {
                 opacity: 0;
@@ -241,147 +274,99 @@
             }
         }
 
-        /* Safari Mobile Responsive - iPad/Tablet */
-        @media (max-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
-            .home-page {
-                height: 100vh;
-                height: -webkit-fill-available;
-                background-size: cover;
-                background-position: center center;
-                background-attachment: scroll;
-            }
-        }
-
-        /* Safari Mobile Responsive - Large Mobile */
+        /* Responsive Design - Mobile First Approach */
         @media (max-width: 768px) {
-            .home-page {
-                height: 100vh;
-                height: -webkit-fill-available;
-                background-size: cover;
-                background-position: center center;
-                background-attachment: scroll;
-                -webkit-background-size: cover;
-            }
-            
             .home-page::before {
-                width: 320px; /* Adjusted for tablet screens */
-                height: 320px;
+                width: min(350px, 75vw);
+                height: min(350px, 75vw);
             }
             
             .envelope {
-                width: 250px;
-                height: 160px;
+                width: 200px;
+                height: 130px;
             }
             
             .wedding-card {
-                padding: 20px 10px;
+                padding: 20px 15px;
             }
             
             .card-front, .card-back {
-                padding: 40px 20px;
-                min-height: 470px;
-            }
-        }
-
-        /* Safari Mobile Responsive - Standard Mobile */
-        @media (max-width: 480px) {
-            .home-page {
-                height: 100vh;
-                height: -webkit-fill-available;
-                background-size: cover;
-                background-position: center center;
-                background-attachment: scroll;
-                -webkit-background-size: cover;
-                /* Prevent Safari zoom on rotation */
-                -webkit-text-size-adjust: 100%;
-            }
-            
-            .home-page::before {
-                width: 260px;
-                height: 260px;
-            }
-            
-            .card-front, .card-back {
-                min-height: 400px;
-            }
-        }
-
-        /* Safari iPhone specific - Standard iPhones */
-        @media (max-width: 390px) and (-webkit-min-device-pixel-ratio: 2) {
-            .home-page {
-                height: 100vh;
-                height: -webkit-fill-available;
-                background-size: cover;
-                background-position: center center;
-                background-attachment: scroll;
-                -webkit-background-size: cover;
-            }
-            
-            .home-page::before {
-                width: 240px;
-                height: 240px;
+                padding: 40px 25px;
+                min-height: 500px;
             }
             
             .click-hint {
-                bottom: 60px; /* Move higher to avoid Safari bottom bar */
                 font-size: 14px;
+                bottom: max(20px, env(safe-area-inset-bottom, 20px));
             }
         }
 
-        /* Safari iPhone Pro/Max - Larger iPhones */
-        @media (max-width: 430px) and (min-width: 391px) and (-webkit-min-device-pixel-ratio: 3) {
-            .home-page {
-                height: 100vh;
-                height: -webkit-fill-available;
-                background-size: cover;
-                background-position: center center;
-                background-attachment: scroll;
+        @media (max-width: 480px) {
+            .home-page::before {
+                width: min(280px, 70vw);
+                height: min(280px, 70vw);
             }
             
-            .home-page::before {
-                width: 280px;
-                height: 280px;
-            }
-        }
-
-        /* Safari iPhone SE and smaller devices */
-        @media (max-width: 360px) {
-            .home-page {
-                height: 100vh;
-                height: -webkit-fill-available;
-                background-size: cover;
-                background-position: center center;
-                background-attachment: scroll;
+            .wedding-card {
+                padding: 15px 10px;
             }
             
-            .home-page::before {
-                width: 220px;
-                height: 220px;
+            .card-front, .card-back {
+                padding: 30px 20px;
+                min-height: 450px;
+                border-radius: 15px;
             }
             
             .click-hint {
-                bottom: 50px;
                 font-size: 13px;
             }
+            
+            .link-area {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
         }
 
-        /* Landscape orientation fixes for Safari mobile */
-        @media (orientation: landscape) and (max-height: 500px) {
+        /* High DPI displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .home-page {
+                background-image: url('./images/frontpage1.jpg');
+            }
+        }
+
+        /* Landscape orientation on mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
             .home-page {
                 height: 100vh;
-                height: -webkit-fill-available;
-                background-size: cover;
-                background-position: center center;
+                min-height: 100vh;
             }
             
             .home-page::before {
-                width: 200px;
-                height: 200px;
+                width: min(300px, 40vh);
+                height: min(300px, 40vh);
             }
             
             .click-hint {
-                bottom: 20px;
+                bottom: 15px;
                 font-size: 12px;
+            }
+        }
+
+        /* iOS specific adjustments */
+        @supports (-webkit-touch-callout: none) {
+            .wedding-page {
+                min-height: -webkit-fill-available;
+            }
+            
+            .home-page {
+                background-attachment: scroll;
+            }
+        }
+
+        /* Android Chrome specific adjustments */
+        @media screen and (-webkit-min-device-pixel-ratio: 0) {
+            .home-page {
+                background-attachment: scroll;
             }
         }
     </style>
@@ -398,7 +383,7 @@
                 </div>
             </div>
         </div>
-        <div class="click-hint">Click to open 👆</div>
+        <div class="click-hint">Tap to open invitation ✨</div>
     </div>
 
     <!-- Wedding Page -->
@@ -417,47 +402,106 @@
     </div>
 
     <script>
+        // Enhanced mobile support
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prevent zoom on double tap
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+
+            // Handle viewport changes (for mobile keyboards, etc.)
+            const handleViewportChange = () => {
+                const vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            };
+
+            window.addEventListener('resize', handleViewportChange);
+            window.addEventListener('orientationchange', handleViewportChange);
+            handleViewportChange();
+        });
+
         // Hide loading when page loads
         window.addEventListener('load', function() {
             const loading = document.getElementById('loading');
             loading.classList.add('hidden');
             
-            // Completely remove the loading element after fade out
             setTimeout(() => {
                 loading.style.display = 'none';
             }, 500);
         });
 
-        document.getElementById('homePage').addEventListener('click', function() {
-            // Hide home page
-            this.style.transform = 'scale(1.1)';
-            this.style.opacity = '0';
+        // Enhanced click/touch handler
+        document.getElementById('homePage').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Add touch feedback
+            this.style.transform = 'scale(0.98)';
+            this.style.opacity = '0.9';
             
             setTimeout(() => {
-                this.style.display = 'none';
-                document.getElementById('weddingPage').style.display = 'block';
+                this.style.transform = 'scale(1.02)';
+                this.style.opacity = '0';
                 
-                // Smooth scroll to top
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }, 600);
+                setTimeout(() => {
+                    this.style.display = 'none';
+                    const weddingPage = document.getElementById('weddingPage');
+                    weddingPage.style.display = 'block';
+                    
+                    // Smooth scroll to top
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Force a reflow to ensure proper rendering
+                    weddingPage.offsetHeight;
+                }, 300);
+            }, 200);
         });
 
-        // Add smooth scrolling behavior
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add parallax effect to background
-            window.addEventListener('scroll', function() {
-                const scrolled = window.pageYOffset;
-                const rate = scrolled * -0.5;
-                
-                const cards = document.querySelectorAll('.card-front, .card-back');
-                cards.forEach(card => {
-                    card.style.transform = `translateY(${rate * 0.1}px)`;
-                });
-            });
+        // Add touch support for better mobile interaction
+        document.getElementById('homePage').addEventListener('touchstart', function(e) {
+            this.style.transform = 'scale(0.98)';
         });
+
+        document.getElementById('homePage').addEventListener('touchend', function(e) {
+            setTimeout(() => {
+                if (this.style.display !== 'none') {
+                    this.style.transform = 'scale(1)';
+                }
+            }, 100);
+        });
+
+        // Optimized scroll handling for mobile
+        let ticking = false;
+        function updateScrollEffects() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            const cards = document.querySelectorAll('.card-front, .card-back');
+            cards.forEach(card => {
+                card.style.transform = `translateY(${rate * 0.1}px)`;
+            });
+            
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(updateScrollEffects);
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // Handle safe area insets for newer iPhones
+        if (CSS.supports('padding: max(0px)')) {
+            document.documentElement.style.setProperty('--safe-area-inset-bottom', 'env(safe-area-inset-bottom)');
+        }
     </script>
 </body>
 </html>
