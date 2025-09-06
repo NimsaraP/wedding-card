@@ -45,20 +45,19 @@
         .home-page {
             width: 100vw;
             height: 100vh;
-            height: 100svh; /* Small viewport height - excludes browser UI */
+            height: calc(100vh + 100px); /* Extra height to cover browser UI changes */
             /* Cross-browser viewport fixes */
             min-height: -webkit-fill-available; /* Safari */
             min-height: fill-available; /* Chrome/Firefox */
-            min-height: 100vh; /* Fallback */
-            max-height: 100vh;
-            max-height: 100svh;
+            min-height: calc(100vh + 100px); /* Fallback with extra height */
             display: flex;
             align-items: center;
             justify-content: center;
             background: url('./images/frontpage1.jpg') center center no-repeat;
             background-size: cover;
-            position: fixed;
-            top: 0;
+            background-position: center center;
+            position: absolute;
+            top: -50px;
             left: 0;
             overflow: hidden;
             cursor: pointer;
@@ -73,7 +72,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, calc(-50% + 25px));
             width: 300px;
             height: 300px;
             background: url('./images/card.png') center center/contain no-repeat;
