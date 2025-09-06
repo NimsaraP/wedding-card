@@ -238,6 +238,11 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .home-page {
+                background-size: cover; /* Ensures image covers full screen */
+                background-position: center center;
+            }
+            
             .home-page::before {
                 width: 350px;
                 height: 350px;
@@ -259,13 +264,34 @@
         }
 
         @media (max-width: 480px) {
+            .home-page {
+                background-size: cover; /* Maintains full coverage */
+                background-position: center center;
+                /* Alternative option - use contain to fit entire image: */
+                /* background-size: contain; */
+                /* background-repeat: no-repeat; */
+            }
+            
             .home-page::before {
-                width: 300px;
-                height: 300px;
+                width: 280px; /* Reduced size for smaller screens */
+                height: 280px;
             }
             
             .card-front, .card-back {
                 min-height: 400px; /* Further adjusted for smaller screens */
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 360px) {
+            .home-page {
+                background-size: cover;
+                background-position: center center;
+            }
+            
+            .home-page::before {
+                width: 250px;
+                height: 250px;
             }
         }
     </style>
