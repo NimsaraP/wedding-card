@@ -48,7 +48,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: url('./images/front.jpg') center center/cover no-repeat;
+            background: url('./images/frontpage1.jpg') center center/cover no-repeat;
             position: relative;
             overflow: hidden;
             cursor: pointer;
@@ -125,7 +125,7 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-             color: #000000;
+             color: #8B8000;
             font-size: 16px;
             animation: bounce 2s infinite;
             opacity: 0.8;
@@ -156,7 +156,8 @@
             position: relative;
             overflow: hidden;
             animation: slideInUp 1s ease-out;
-            min-height: 600px;
+            min-height: 565px; /* Updated from 600px to accommodate 1240x1650 aspect ratio */
+            aspect-ratio: 1240/1650; /* Added aspect ratio for better consistency */
         }
 
         .card-back {
@@ -167,7 +168,8 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.1);
             position: relative;
             overflow: hidden;
-            min-height: 600px;
+            min-height: 565px; /* Updated from 600px to accommodate 1240x1650 aspect ratio */
+            aspect-ratio: 1240/1650; /* Added aspect ratio for better consistency */
             animation: slideInUp 1s ease-out 0.5s forwards;
         }
 
@@ -252,6 +254,7 @@
             
             .card-front, .card-back {
                 padding: 40px 20px;
+                min-height: 470px; /* Adjusted for mobile to maintain aspect ratio */
             }
         }
 
@@ -259,6 +262,10 @@
             .home-page::before {
                 width: 300px;
                 height: 300px;
+            }
+            
+            .card-front, .card-back {
+                min-height: 400px; /* Further adjusted for smaller screens */
             }
         }
     </style>
@@ -275,7 +282,7 @@
                 </div>
             </div>
         </div>
-        <div class="click-hint">Click to open ✨</div>
+        <div class="click-hint">Click to open invitation ✨</div>
     </div>
 
     <!-- Wedding Page -->
