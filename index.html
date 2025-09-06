@@ -41,10 +41,12 @@
             pointer-events: none;
         }
 
-        /* Home Page */
+        /* Home Page - Safari Mobile Optimized */
         .home-page {
             width: 100vw;
             height: 100vh;
+            /* Safari mobile viewport fixes */
+            min-height: -webkit-fill-available;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -53,6 +55,9 @@
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s ease;
+            /* Safari mobile background fixes */
+            background-attachment: scroll;
+            -webkit-background-size: cover;
         }
 
         .home-page::before {
@@ -236,16 +241,31 @@
             }
         }
 
-        /* Responsive */
+        /* Safari Mobile Responsive - iPad/Tablet */
+        @media (max-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+            .home-page {
+                height: 100vh;
+                height: -webkit-fill-available;
+                background-size: cover;
+                background-position: center center;
+                background-attachment: scroll;
+            }
+        }
+
+        /* Safari Mobile Responsive - Large Mobile */
         @media (max-width: 768px) {
             .home-page {
-                background-size: cover; /* Ensures image covers full screen */
+                height: 100vh;
+                height: -webkit-fill-available;
+                background-size: cover;
                 background-position: center center;
+                background-attachment: scroll;
+                -webkit-background-size: cover;
             }
             
             .home-page::before {
-                width: 350px;
-                height: 350px;
+                width: 320px; /* Adjusted for tablet screens */
+                height: 320px;
             }
             
             .envelope {
@@ -259,39 +279,109 @@
             
             .card-front, .card-back {
                 padding: 40px 20px;
-                min-height: 470px; /* Adjusted for mobile to maintain aspect ratio */
+                min-height: 470px;
             }
         }
 
+        /* Safari Mobile Responsive - Standard Mobile */
         @media (max-width: 480px) {
             .home-page {
-                background-size: cover; /* Maintains full coverage */
+                height: 100vh;
+                height: -webkit-fill-available;
+                background-size: cover;
                 background-position: center center;
-                /* Alternative option - use contain to fit entire image: */
-                /* background-size: contain; */
-                /* background-repeat: no-repeat; */
+                background-attachment: scroll;
+                -webkit-background-size: cover;
+                /* Prevent Safari zoom on rotation */
+                -webkit-text-size-adjust: 100%;
             }
             
             .home-page::before {
-                width: 280px; /* Reduced size for smaller screens */
-                height: 280px;
+                width: 260px;
+                height: 260px;
             }
             
             .card-front, .card-back {
-                min-height: 400px; /* Further adjusted for smaller screens */
+                min-height: 400px;
             }
         }
 
-        /* Extra small devices */
+        /* Safari iPhone specific - Standard iPhones */
+        @media (max-width: 390px) and (-webkit-min-device-pixel-ratio: 2) {
+            .home-page {
+                height: 100vh;
+                height: -webkit-fill-available;
+                background-size: cover;
+                background-position: center center;
+                background-attachment: scroll;
+                -webkit-background-size: cover;
+            }
+            
+            .home-page::before {
+                width: 240px;
+                height: 240px;
+            }
+            
+            .click-hint {
+                bottom: 60px; /* Move higher to avoid Safari bottom bar */
+                font-size: 14px;
+            }
+        }
+
+        /* Safari iPhone Pro/Max - Larger iPhones */
+        @media (max-width: 430px) and (min-width: 391px) and (-webkit-min-device-pixel-ratio: 3) {
+            .home-page {
+                height: 100vh;
+                height: -webkit-fill-available;
+                background-size: cover;
+                background-position: center center;
+                background-attachment: scroll;
+            }
+            
+            .home-page::before {
+                width: 280px;
+                height: 280px;
+            }
+        }
+
+        /* Safari iPhone SE and smaller devices */
         @media (max-width: 360px) {
             .home-page {
+                height: 100vh;
+                height: -webkit-fill-available;
+                background-size: cover;
+                background-position: center center;
+                background-attachment: scroll;
+            }
+            
+            .home-page::before {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .click-hint {
+                bottom: 50px;
+                font-size: 13px;
+            }
+        }
+
+        /* Landscape orientation fixes for Safari mobile */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .home-page {
+                height: 100vh;
+                height: -webkit-fill-available;
                 background-size: cover;
                 background-position: center center;
             }
             
             .home-page::before {
-                width: 250px;
-                height: 250px;
+                width: 200px;
+                height: 200px;
+            }
+            
+            .click-hint {
+                bottom: 20px;
+                font-size: 12px;
             }
         }
     </style>
