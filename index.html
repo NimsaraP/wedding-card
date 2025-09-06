@@ -402,8 +402,32 @@
     </div>
 
     <script>
-        // Enhanced mobile support
+        // Enhanced mobile support with Safari fixes
         document.addEventListener('DOMContentLoaded', function() {
+            // Safari-specific viewport fixes
+            function setSafariViewport() {
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+                
+                if (isIOS || isSafari) {
+                    // Fix Safari viewport height issues
+                    const vh = window.innerHeight * 0.01;
+                    document.documentElement.style.setProperty('--vh', `${vh}px`);
+                    
+                    // Force background image reload on Safari
+                    const homePage = document.getElementById('homePage');
+                    if (homePage) {
+                        homePage.style.backgroundImage = "url('./images/frontpage1.jpg')";
+                        homePage.style.backgroundSize = 'cover';
+                        homePage.style.backgroundPosition = 'center center';
+                        homePage.style.backgroundAttachment = 'scroll';
+                        homePage.style.backgroundRepeat = 'no-repeat';
+                    }
+                }
+            }
+
+            setSafariViewport();
+            
             // Prevent zoom on double tap
             let lastTouchEnd = 0;
             document.addEventListener('touchend', function (event) {
@@ -414,15 +438,20 @@
                 lastTouchEnd = now;
             }, false);
 
-            // Handle viewport changes (for mobile keyboards, etc.)
+            // Handle viewport changes with Safari fixes
             const handleViewportChange = () => {
-                const vh = window.innerHeight * 0.01;
-                document.documentElement.style.setProperty('--vh', `${vh}px`);
+                setTimeout(() => {
+                    setSafariViewport();
+                }, 100);
             };
 
             window.addEventListener('resize', handleViewportChange);
             window.addEventListener('orientationchange', handleViewportChange);
-            handleViewportChange();
+            
+            // Safari-specific orientation change handler
+            window.addEventListener('orientationchange', function() {
+                setTimeout(setSafariViewport, 500);
+            });
         });
 
         // Hide loading when page loads
