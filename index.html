@@ -233,11 +233,13 @@
         }
 
         .link-text a:hover {
-            background: #f5f4f1; /* Slightly darker off-white on hover */
+            background: rgba(245, 244, 241, 0.5); /* Slightly more opaque on hover */
             color: #1a1a1a;
             transform: translateY(-2px) scale(1.02);
             box-shadow: 0 8px 20px rgba(44, 44, 44, 0.25);
             border-color: #1a1a1a;
+            backdrop-filter: blur(15px); /* Increased blur on hover */
+            -webkit-backdrop-filter: blur(15px);
         }
 
         /* Animations */
@@ -549,7 +551,8 @@
             <div class="card-back">
                 <div class="link-text">
                     <a href="https://linktr.ee/sawingirhills" target="_blank">
-                        https://linktr.ee/sawingirhills
+                        <span>https://linktr.ee/</span><br>
+                        <span>sawingirhills</span>
                     </a>
                 </div>
             </div>
