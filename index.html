@@ -41,25 +41,30 @@
             pointer-events: none;
         }
 
-        /* Home Page - Fixed and corrected */
+        /* Home Page - Cross-browser mobile optimized */
         .home-page {
             width: 100vw;
-            height: 100vh;
+            height: 90vh;
+            height: calc(90vh + 264px); /* Safari: 82px top + 182px bottom = 264px total UI */
+            /* Cross-browser viewport fixes */
+            min-height: -webkit-fill-available; /* Safari */
+            min-height: fill-available; /* Chrome/Firefox */
+            min-height: calc(90vh + 129px); /* Chrome Android: 129px top UI */
             display: flex;
             align-items: center;
             justify-content: center;
-            background: url('./images/frontpage2.jpg') center center no-repeat;
-            background-size: cover;
+            background: url('./images/frontpage1.jpg') center center no-repeat;
+            background-size: contain;
             background-position: center center;
-            background-attachment: scroll; /* Fixed: was 'cover' which is invalid */
-            position: relative; /* Fixed: changed back from 'static' to support floating card */
-            top: 0;
+            position: static;
+            top: 0; /* Keep at normal position - no cutting off top */
             left: 0;
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s ease;
             /* Cross-browser background fixes */
-            -webkit-background-size: cover; /* Fixed: now matches background-size */
+            background-attachment: cover;
+            -webkit-background-size: cover;
         }
 
         .home-page::before {
@@ -68,8 +73,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 450px;
-            height: 450px;
+            width: 450px; /* Increased from 300px */
+            height: 450px; /* Increased from 300px */
             background: url('./images/card.png') center center/contain no-repeat;
             animation: float 6s ease-in-out infinite;
             z-index: 2;
@@ -78,7 +83,7 @@
         .envelope-container {
             position: relative;
             animation: pulse 1s ease-in-out infinite;
-            display: none;
+            display: none; /* Hide the envelope since we're using your images */
         }
 
         .envelope {
@@ -89,7 +94,7 @@
             border-radius: 10px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             transform-style: preserve-3d;
-            transition: all 0.1s ease;
+            transition: all 0.1s ease; /* Even faster and more responsive */
         }
 
         .envelope:hover {
@@ -107,7 +112,7 @@
             clip-path: polygon(0 0, 50% 70%, 100% 0);
             border-radius: 8px 8px 0 0;
             transform-origin: top center;
-            animation: flapOpen 0.6s ease-in-out infinite;
+            animation: flapOpen 0.6s ease-in-out infinite; /* Super fast and very noticeable */
         }
 
         .invitation-peek {
@@ -130,10 +135,10 @@
 
         .click-hint {
             position: absolute;
-            bottom: 150px;
+            bottom: 150px; /* Moved from 30px to 150px - closer to the envelope/card */
             left: 50%;
             transform: translateX(-50%);
-            color: #8B8000;
+             color: #8B8000;
             font-size: 16px;
             animation: bounce 2s infinite;
             opacity: 0.8;
@@ -164,8 +169,8 @@
             position: relative;
             overflow: hidden;
             animation: slideInUp 1s ease-out;
-            min-height: 565px;
-            aspect-ratio: 1240/1650;
+            min-height: 565px; /* Updated from 600px to accommodate 1240x1650 aspect ratio */
+            aspect-ratio: 1240/1650; /* Added aspect ratio for better consistency */
         }
 
         .card-back {
@@ -176,12 +181,12 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.1);
             position: relative;
             overflow: hidden;
-            min-height: 565px;
-            aspect-ratio: 1240/1650;
+            min-height: 565px; /* Updated from 600px to accommodate 1240x1650 aspect ratio */
+            aspect-ratio: 1240/1650; /* Added aspect ratio for better consistency */
             animation: slideInUp 1s ease-out 0.5s forwards;
         }
 
-        /* QR Code Styling - Fixed HTML structure issue */
+        /* QR Code Styling */
         .qr-code {
             position: relative;
             left: 25px;
@@ -222,7 +227,6 @@
             40% { transform: translateX(-50%) translateY(-10px); }
             60% { transform: translateX(-50%) translateY(-5px); }
         }
-        
         @keyframes slideInUp {
             from {
                 opacity: 0;
@@ -238,10 +242,10 @@
         @media (max-width: 1024px) {
             .home-page {
                 height: 100vh;
-                min-height: -webkit-fill-available;
-                min-height: fill-available;
-                min-height: 100vh;
-                background-size: cover; /* Fixed: consistent with main rule */
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 100vh; /* Fallback */
+                background-size: cover;
                 background-position: center center;
                 background-attachment: scroll;
                 -webkit-background-size: cover;
@@ -259,20 +263,21 @@
         @media (max-width: 768px) {
             .home-page {
                 height: 100vh;
-                min-height: -webkit-fill-available;
-                min-height: fill-available;
-                min-height: 100vh;
-                background-size: cover; /* Fixed: consistent with main rule */
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 100vh; /* Fallback */
+                background-size: cover;
                 background-position: center center;
                 background-attachment: scroll;
                 -webkit-background-size: cover;
+                /* Chrome mobile optimizations */
                 touch-action: manipulation;
                 -webkit-tap-highlight-color: transparent;
             }
             
             .home-page::before {
-                width: 400px;
-                height: 400px;
+                width: 400px; /* Increased from 320px */
+                height: 400px; /* Increased from 320px */
             }
             
             .envelope {
@@ -290,7 +295,7 @@
             }
             
             .click-hint {
-                bottom: 120px;
+                bottom: 120px; /* Adjusted for mobile - closer to card */
             }
 
             .qr-code {
@@ -304,12 +309,15 @@
         /* Cross-browser Mobile Responsive - Standard Mobile */
         @media (max-width: 480px) {
             .home-page {
-                height: 65vh; /* Reduced proportionally */
-                margin: 17.5vh auto; /* Adjusted margin */
-                background-size: cover; /* Fixed: consistent with main rule */
+                height: 100vh;
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 100vh; /* Fallback */
+                background-size: cover;
                 background-position: center center;
                 background-attachment: scroll;
                 -webkit-background-size: cover;
+                /* Cross-browser mobile optimizations */
                 -webkit-text-size-adjust: 100%;
                 text-size-adjust: 100%;
                 touch-action: manipulation;
@@ -320,8 +328,8 @@
             }
             
             .home-page::before {
-                width: 350px;
-                height: 350px;
+                width: 350px; /* Increased from 260px */
+                height: 350px; /* Increased from 260px */
             }
             
             .card-front, .card-back {
@@ -329,7 +337,7 @@
             }
             
             .click-hint {
-                bottom: 100px;
+                bottom: 100px; /* Adjusted for mobile - closer to card */
             }
 
             .qr-code {
@@ -343,23 +351,26 @@
         /* Chrome Android specific - Standard Androids */
         @media (max-width: 390px) {
             .home-page {
-                height: 65vh; /* Reduced proportionally */
-                margin: 17.5vh auto; /* Adjusted margin */
-                background-size: 100% 100%;
+                height: 100vh;
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 100vh; /* Fallback */
+                background-size: cover;
                 background-position: center center;
                 background-attachment: scroll;
-                -webkit-background-size: 100% 100%;
+                -webkit-background-size: cover;
+                /* Chrome Android optimizations */
                 touch-action: manipulation;
                 -webkit-tap-highlight-color: transparent;
             }
             
             .home-page::before {
-                width: 320px;
-                height: 320px;
+                width: 320px; /* Increased from 240px */
+                height: 320px; /* Increased from 240px */
             }
             
             .click-hint {
-                bottom: 150px;
+                bottom: 150px; /* Adjusted for mobile - closer to card */
                 font-size: 14px;
             }
 
@@ -375,22 +386,22 @@
         @media (max-width: 430px) and (min-width: 391px) {
             .home-page {
                 height: 100vh;
-                min-height: -webkit-fill-available;
-                min-height: fill-available;
-                min-height: 100vh;
-                background-size: cover; /* Fixed: consistent with main rule */
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 100vh; /* Fallback */
+                background-size: cover;
                 background-position: center center;
                 background-attachment: scroll;
                 -webkit-background-size: cover;
             }
             
             .home-page::before {
-                width: 360px;
-                height: 360px;
+                width: 360px; /* Increased from 280px */
+                height: 360px; /* Increased from 280px */
             }
             
             .click-hint {
-                bottom: 95px;
+                bottom: 95px; /* Adjusted for mobile - closer to card */
             }
         }
 
@@ -398,22 +409,22 @@
         @media (max-width: 360px) {
             .home-page {
                 height: 100vh;
-                min-height: -webkit-fill-available;
-                min-height: fill-available;
-                min-height: 100vh;
-                background-size: cover; /* Fixed: consistent with main rule */
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 100vh; /* Fallback */
+                background-size: cover;
                 background-position: center center;
                 background-attachment: scroll;
                 -webkit-background-size: cover;
             }
             
             .home-page::before {
-                width: 300px;
-                height: 300px;
+                width: 300px; /* Increased from 220px */
+                height: 300px; /* Increased from 220px */
             }
             
             .click-hint {
-                bottom: 80px;
+                bottom: 80px; /* Adjusted for mobile - closer to card */
                 font-size: 13px;
             }
 
@@ -429,24 +440,27 @@
         @media (orientation: landscape) and (max-height: 500px) {
             .home-page {
                 height: 100vh;
-                min-height: -webkit-fill-available;
-                min-height: fill-available;
-                min-height: 100vh;
-                background-size: cover; /* Fixed: consistent with main rule */
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 100vh; /* Fallback */
+                background-size: cover;
                 background-position: center center;
+                /* Prevent zoom and improve touch handling */
                 touch-action: manipulation;
                 -webkit-tap-highlight-color: transparent;
             }
             
             .home-page::before {
-                width: 280px;
-                height: 280px;
+                width: 280px; /* Increased from 200px */
+                height: 280px; /* Increased from 200px */
             }
             
             .click-hint {
-                bottom: 40px;
+                bottom: 40px; /* Adjusted for landscape - closer to card */
                 font-size: 12px;
             }
+
+            /* QR code will scale automatically with percentage-based positioning */
         }
     </style>
 </head>
@@ -474,9 +488,8 @@
             <!-- Card Back -->
             <div class="card-back">
                 <div class="qr-code">
-                    <a href="https://linktr.ee/sawingirhills" target="_blank">
-                        <img src="./images/qr-code.png" alt="QR Code">
-                    </a>
+                    <a href="https://linktr.ee/sawingirhills" target="_blank" class="qr-code">
+                    <img src="./images/qr-code.png" alt="QR Code">
                 </div>
             </div>
         </div>
