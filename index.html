@@ -233,13 +233,13 @@
         }
 
         .link-text a:hover {
-            background: transparent; /* Keep transparent on hover */
+            background: rgba(255, 255, 255, 0.2); /* Slightly more visible on hover */
             color: #1a1a1a;
             transform: translateY(-2px) scale(1.02);
             box-shadow: 0 8px 20px rgba(44, 44, 44, 0.25);
             border-color: #1a1a1a;
-            backdrop-filter: blur(15px); /* Increased blur on hover */
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px) saturate(1.5); /* Enhanced blur on hover */
+            -webkit-backdrop-filter: blur(20px) saturate(1.5);
         }
 
         /* Animations */
@@ -490,7 +490,7 @@
             }
 
             .link-text {
-                width: 70px;
+                width: 110px; /* Increased from 70px */
                 height: 70px;
             }
 
