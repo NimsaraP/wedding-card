@@ -186,24 +186,40 @@
             animation: slideInUp 1s ease-out 0.5s forwards;
         }
 
-        /* QR Code Styling */
-        .qr-code {
+        /* Link Styling - Replaces QR Code */
+        .link-text {
             position: relative;
             left: 25px;
             top: 40px;
             width: 200px;
             height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .link-text a {
+            color: #2c2c2c;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #f8f6f0 0%, #e6d7b8 50%, #d4af37 100%);
+            border-radius: 8px;
+            border: 2px solid #d4af37;
             transition: all 0.3s ease;
+            word-break: break-all;
+            line-height: 1.4;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
         }
 
-        .qr-code:hover {
-            transform: scale(1.1);
-        }
-
-        .qr-code img {
-            width: 110%;
-            height: 110%;
-            object-fit: contain;
+        .link-text a:hover {
+            background: linear-gradient(135deg, #d4af37 0%, #b8941f 50%, #8b6914 100%);
+            color: #f8f6f0;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5);
+            border-color: #b8941f;
         }
 
         /* Animations */
@@ -251,11 +267,14 @@
                 -webkit-background-size: cover;
             }
 
-            .qr-code {
-                width: 120px;
-                height: 120px;
-                bottom: 15px;
-                right: 15px;
+            .link-text {
+                width: 150px;
+                height: 150px;
+            }
+
+            .link-text a {
+                font-size: 12px;
+                padding: 8px 12px;
             }
         }
 
@@ -298,11 +317,14 @@
                 bottom: 120px; /* Adjusted for mobile - closer to card */
             }
 
-            .qr-code {
+            .link-text {
                 width: 120px;
                 height: 120px;
-                bottom: 15px;
-                right: 15px;
+            }
+
+            .link-text a {
+                font-size: 10px;
+                padding: 6px 10px;
             }
         }
 
@@ -340,11 +362,14 @@
                 bottom: 100px; /* Adjusted for mobile - closer to card */
             }
 
-            .qr-code {
-                width: 60px;
-                height: 60px;
-                bottom: 10px;
-                right: 10px;
+            .link-text {
+                width: 80px;
+                height: 80px;
+            }
+
+            .link-text a {
+                font-size: 8px;
+                padding: 4px 6px;
             }
         }
 
@@ -374,11 +399,14 @@
                 font-size: 14px;
             }
 
-            .qr-code {
-                width: 55px;
-                height: 55px;
-                bottom: 8px;
-                right: 8px;
+            .link-text {
+                width: 75px;
+                height: 75px;
+            }
+
+            .link-text a {
+                font-size: 7px;
+                padding: 3px 5px;
             }
         }
 
@@ -428,11 +456,14 @@
                 font-size: 13px;
             }
 
-            .qr-code {
-                width: 50px;
-                height: 50px;
-                bottom: 6px;
-                right: 6px;
+            .link-text {
+                width: 70px;
+                height: 70px;
+            }
+
+            .link-text a {
+                font-size: 7px;
+                padding: 3px 4px;
             }
         }
 
@@ -459,8 +490,6 @@
                 bottom: 40px; /* Adjusted for landscape - closer to card */
                 font-size: 12px;
             }
-
-            /* QR code will scale automatically with percentage-based positioning */
         }
     </style>
 </head>
@@ -487,9 +516,10 @@
             
             <!-- Card Back -->
             <div class="card-back">
-                <div class="qr-code">
-                    <a href="https://linktr.ee/sawingirhills" target="_blank" class="qr-code">
-                    <img src="./images/qr-code.png" alt="QR Code">
+                <div class="link-text">
+                    <a href="https://linktr.ee/sawingirhills" target="_blank">
+                        https://linktr.ee/sawingirhills
+                    </a>
                 </div>
             </div>
         </div>
