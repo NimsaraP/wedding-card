@@ -188,15 +188,16 @@
 
         /* Link Styling - Updated with off-white background and matching border */
         .link-text {
-            position: relative;
-            left: 13%;      /* Instead of 39px */
-            top: 34%;       /* Instead of 70px */
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+        position: absolute;
+        top: 34%;                  /* adjust vertical placement */
+        left: 50%;                 /* center horizontally */
+        transform: translateX(-50%); /* true centering */
+        width: 200px;
+        height: auto;              /* let height adjust naturally */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center; 
         }
 
         .link-text a {
