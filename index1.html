@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        /* Loading Screen */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(250, 250, 250, 0.3);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 18px;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Home Page - Cross-browser mobile optimized */
+        .home-page {
+            width: 100vw;
+            height: 90vh;
+            height: calc(90vh + 264px); /* Safari: 82px top + 182px bottom = 264px total UI */
+            /* Cross-browser viewport fixes */
+            min-height: -webkit-fill-available; /* Safari */
+            min-height: fill-available; /* Chrome/Firefox */
+            min-height: calc(90vh + 129px); /* Chrome Android: 129px top UI */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('./images/frontpage4.jpg') center center no-repeat;
+            background-size: contain;
+            background-position: center center;
+            position: static;
+            top: 0; /* Keep at normal position - no cutting off top */
+            left: 0;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            /* Cross-browser background fixes */
+            background-attachment: cover;
+            -webkit-background-size: cover;
+        }
+
+        .home-page::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px; /* Increased from 300px */
+            height: 450px; /* Increased from 300px */
+            background: url('./images/postcard1.png') center center/contain no-repeat;
+            animation: float 6s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        .envelope-container {
+            position: relative;
+            animation: pulse 1s ease-in-out infinite;
+            display: none; /* Hide the envelope since we're using your images */
+        }
+
+        .envelope {
+            width: 200px;
+            height: 600px;
+            background: linear-gradient(145deg, #8B9467, #9BA670);
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transform-style: preserve-3d;
+            transition: all 0.1s ease; /* Even faster and more responsive */
+        }
+
+        .envelope:hover {
+            transform: rotateY(20deg) rotateX(10deg) scale(1.15);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 200px;
+            height: 600px;
+            background: linear-gradient(145deg, #9BA670, #A8B377);
+            clip-path: polygon(0 0, 50% 70%, 100% 0);
+            border-radius: 8px 8px 0 0;
+            transform-origin: top center;
+            animation: flapOpen 0.6s ease-in-out infinite; /* Super fast and very noticeable */
+        }
+
+        .invitation-peek {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 40px;
+            background: #f8f8f8;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .click-hint {
+            position: absolute;
+            bottom: 150px; /* Moved from 30px to 150px - closer to the envelope/card */
+            left: 50%;
+            transform: translateX(-50%);
+             color: #8B8000;
+            font-size: 16px;
+            animation: bounce 2s infinite;
+            opacity: 0.8;
+        }
+
+        /* Main Wedding Page */
+        .wedding-page {
+            display: none;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .wedding-card {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            box-sizing: border-box; 
+        }
+
+        .card-front {
+            background: url('./images/tsf1.jpg') center center/cover no-repeat;
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            animation: slideInUp 1s ease-out;
+             /* Stable sizing */
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 1240 / 1650;
+    height: auto;
+            /*min-height: 565px; /* Updated from 600px to accommodate 1240x1650 aspect ratio */
+            /*aspect-ratio: 1240/1650; /* Added aspect ratio for better consistency */
+        }
+
+        .card-back {
+            background: url('./images/cardside2.jpg') center center/cover no-repeat;
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin-top: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+           /* Stable sizing */
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 1240 / 1650;
+    height: auto;
+            /*min-height: 565px; /* Updated from 600px to accommodate 1240x1650 aspect ratio */
+            /*aspect-ratio: 1240/1650; /* Added aspect ratio for better consistency */
+            animation: slideInUp 1s ease-out 0.5s forwards;
+        }
+
+        /* Link Styling - Updated with off-white background and matching border */
+        .link-text {
+        position: absolute;
+        top: 22%;                  /* adjust vertical placement */
+        left: 27%;                 /* center horizontally */
+        transform: translateX(-50%); /* true centering */
+        width: 200px;
+        height: auto;              /* let height adjust naturally */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center; 
+        }
+
+        .link-text a {
+            color: #2c2c2c;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 10px 15px;
+            /*background: #faf9f6;*/ /* Off-white background */
+            border-radius: 8px;
+            border: 2px solid #2c2c2c; /* Same color as text */
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            word-break: break-all;
+            line-height: 1.4;
+            box-shadow: 0 4px 12px rgba(44, 44, 44, 0.15);
+            animation: gentlePulse 1.5s ease-in-out infinite; /* Faster - reduced from 3s to 1.5s */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-text a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(44, 44, 44, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .link-text a:hover::before {
+            left: 100%;
+        }
+
+        .link-text a:hover {
+            background: rgba(255, 255, 255, 0.2); /* Slightly more visible on hover */
+            color: #1a1a1a;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(44, 44, 44, 0.25);
+            border-color: #1a1a1a;
+            backdrop-filter: blur(20px) saturate(1.5); /* Enhanced blur on hover */
+            -webkit-backdrop-filter: blur(20px) saturate(1.5);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+            50% { transform: translate(-50%, -50%) translateY(-10px); }
+        }
+
+        @keyframes flapOpen {
+            0%, 100% { transform: rotateX(0deg); }
+            50% { transform: rotateX(-15deg); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* New gentle pulse animation for the link */
+        @keyframes gentlePulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 4px 12px rgba(44, 44, 44, 0.15);
+            }
+            50% { 
+                transform: scale(1.03);
+                box-shadow: 0 6px 16px rgba(44, 44, 44, 0.2);
+            }
+        }
+
+        /* Cross-browser Mobile Responsive - iPad/Tablet */
+        @media (max-width: 1024px) {
+            .home-page {
+                height: 93vh;
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 93vh; /* Fallback */
+                background-size: cover;
+                background-position: center center;
+                background-attachment: scroll;
+                -webkit-background-size: cover;
+            }
+
+            .link-text {
+                width: 160px;
+                height: 150px;
+            }
+
+            .link-text a {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+        }
+
+        /* Cross-browser Mobile Responsive - Large Mobile */
+        @media (max-width: 768px) {
+            .home-page {
+                height: 93vh;
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 93vh; /* Fallback */
+                background-size: cover;
+                background-position: center center;
+                background-attachment: scroll;
+                -webkit-background-size: cover;
+                /* Chrome mobile optimizations */
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            .home-page::before {
+                width: 400px; /* Increased from 320px */
+                height: 400px; /* Increased from 320px */
+            }
+            
+            .envelope {
+                width: 250px;
+                height: 160px;
+            }
+            
+            .wedding-card {
+                padding: 20px 10px;
+            }
+            
+            .card-front, .card-back {
+                padding: 40px 20px;
+                min-height: 470px;
+            }
+            
+            .click-hint {
+                bottom: 120px; /* Adjusted for mobile - closer to card */
+            }
+
+            .link-text {
+                width: 130px;
+                height: 120px;
+            }
+
+            .link-text a {
+                font-size: 10px;
+                padding: 6px 10px;
+            }
+        }
+
+        /* Cross-browser Mobile Responsive - Standard Mobile */
+        @media (max-width: 480px) {
+            .home-page {
+                height: 93vh;
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 93vh; /* Fallback */
+                background-size: cover;
+                background-position: center center;
+                background-attachment: scroll;
+                -webkit-background-size: cover;
+                /* Cross-browser mobile optimizations */
+                -webkit-text-size-adjust: 100%;
+                text-size-adjust: 100%;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                user-select: none;
+            }
+            
+            .home-page::before {
+                width: 350px; /* Increased from 260px */
+                height: 350px; /* Increased from 260px */
+            }
+            
+            .card-front, .card-back {
+                min-height: 400px;
+            }
+            
+            .click-hint {
+                bottom: 100px; /* Adjusted for mobile - closer to card */
+            }
+
+            .link-text {
+                width: 90px;
+                height: 80px;
+            }
+
+            .link-text a {
+                font-size: 8px;
+                padding: 4px 6px;
+            }
+        }
+
+        /* Chrome Android specific - Standard Androids */
+        @media (max-width: 390px) {
+            .home-page {
+                height: 93vh;
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 93vh; /* Fallback */
+                background-size: cover;
+                background-position: center center;
+                background-attachment: scroll;
+                -webkit-background-size: cover;
+                /* Chrome Android optimizations */
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            .home-page::before {
+                width: 320px; /* Increased from 240px */
+                height: 320px; /* Increased from 240px */
+            }
+            
+            .click-hint {
+                bottom: 150px; /* Adjusted for mobile - closer to card */
+                font-size: 14px;
+            }
+
+            .link-text {
+                width: 85px;
+                height: 75px;
+            }
+
+            .link-text a {
+                font-size: 7px;
+                padding: 3px 5px;
+            }
+        }
+
+        /* Chrome Android - Larger devices (Pixel, Samsung, etc.) */
+        @media (max-width: 430px) and (min-width: 391px) {
+            .home-page {
+                height: 93vh;
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 93vh; /* Fallback */
+                background-size: cover;
+                background-position: center center;
+                background-attachment: scroll;
+                -webkit-background-size: cover;
+            }
+            
+            .home-page::before {
+                width: 360px; /* Increased from 280px */
+                height: 360px; /* Increased from 280px */
+            }
+            
+            .click-hint {
+                bottom: 95px; /* Adjusted for mobile - closer to card */
+            }
+        }
+
+        /* Small Android devices and older Chrome browsers */
+        @media (max-width: 360px) {
+            .home-page {
+                height: 93vh;
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 93vh; /* Fallback */
+                background-size: cover;
+                background-position: center center;
+                background-attachment: scroll;
+                -webkit-background-size: cover;
+            }
+            
+            .home-page::before {
+                width: 300px; /* Increased from 220px */
+                height: 300px; /* Increased from 220px */
+            }
+            
+            .click-hint {
+                bottom: 80px; /* Adjusted for mobile - closer to card */
+                font-size: 13px;
+            }
+
+            .link-text {
+                width: 110px; /* Increased from 70px */
+                height: 70px;
+            }
+
+            .link-text a {
+                font-size: 7px;
+                padding: 3px 4px;
+            }
+        }
+
+        /* Landscape orientation fixes for all mobile browsers */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .home-page {
+                height: 100vh;
+                min-height: -webkit-fill-available; /* Safari */
+                min-height: fill-available; /* Chrome/Firefox */
+                min-height: 100vh; /* Fallback */
+                background-size: cover;
+                background-position: center center;
+                /* Prevent zoom and improve touch handling */
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            .home-page::before {
+                width: 280px; /* Increased from 200px */
+                height: 280px; /* Increased from 200px */
+            }
+            
+            .click-hint {
+                bottom: 40px; /* Adjusted for landscape - closer to card */
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">Loading your invitation...</div>
+    
+    <!-- Home Page -->
+    <div class="home-page" id="homePage">
+        <div class="envelope-container">
+            <div class="envelope">
+                <div class="envelope-flap"></div>
+                <div class="invitation-peek">
+                </div>
+            </div>
+        </div>
+        <div class="click-hint">Click to open 👆</div>
+    </div>
+
+    <!-- Wedding Page -->
+    <div class="wedding-page" id="weddingPage">
+        <div class="wedding-card">
+            <!-- Card Front -->
+            <div class="card-front"></div>               
+            
+            <!-- Card Back -->
+            <div class="card-back">
+                <div class="link-text">
+                    <a href="https://linktr.ee/sawingirhills" target="_blank">
+                        <span>https://linktr.ee/</span><br>
+                        <span>sawingirhills</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hide loading when page loads
+        window.addEventListener('load', function() {
+            const loading = document.getElementById('loading');
+            loading.classList.add('hidden');
+            
+            // Completely remove the loading element after fade out
+            setTimeout(() => {
+                loading.style.display = 'none';
+            }, 500);
+        });
+
+        document.getElementById('homePage').addEventListener('click', function() {
+            // Hide home page
+            this.style.transform = 'scale(1.1)';
+            this.style.opacity = '0';
+            
+            setTimeout(() => {
+                this.style.display = 'none';
+                document.getElementById('weddingPage').style.display = 'block';
+                
+                // Smooth scroll to top
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }, 600);
+        });
+
+        // Add smooth scrolling behavior
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add parallax effect to background
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                
+                const cards = document.querySelectorAll('.card-front, .card-back');
+                cards.forEach(card => {
+                    card.style.transform = `translateY(${rate * 0.1}px)`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
