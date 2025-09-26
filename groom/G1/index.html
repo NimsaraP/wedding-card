@@ -169,13 +169,8 @@
             position: relative;
             overflow: hidden;
             animation: slideInUp 1s ease-out;
-            /* Stable sizing */
-    width: 100%;
-    max-width: 600px;
-    aspect-ratio: 1240 / 1650;
-    height: auto; 
-            /*min-height: 565px; /* Updated from 600px to accommodate 1240x1650 aspect ratio */
-            /*aspect-ratio: 1240/1650; /* Added aspect ratio for better consistency */
+            min-height: 565px; /* Updated from 600px to accommodate 1240x1650 aspect ratio */
+            aspect-ratio: 1240/1650; /* Added aspect ratio for better consistency */
         }
 
         .card-back {
@@ -186,13 +181,8 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.1);
             position: relative;
             overflow: hidden;
-            /* Stable sizing */
-    width: 100%;
-    max-width: 600px;
-    aspect-ratio: 1240 / 1650;
-    height: auto; 
-           /* min-height: 565px; /* Updated from 600px to accommodate 1240x1650 aspect ratio */
-            /*aspect-ratio: 1240/1650; /* Added aspect ratio for better consistency */
+            min-height: 565px; /* Updated from 600px to accommodate 1240x1650 aspect ratio */
+            aspect-ratio: 1240/1650; /* Added aspect ratio for better consistency */
             animation: slideInUp 1s ease-out 0.5s forwards;
         }
 
@@ -352,10 +342,10 @@
                 padding: 20px 10px;
             }
             
-           /* .card-front, .card-back {
+            .card-front, .card-back {
                 padding: 40px 20px;
-                min-height: 470px; 
-            } */
+                min-height: 470px;
+            }
             
             .click-hint {
                 bottom: 120px; /* Adjusted for mobile - closer to card */
@@ -398,9 +388,9 @@
                 height: 350px; /* Increased from 260px */
             }
             
-            /*.card-front, .card-back {
-                min-height: 400px;
-            } */
+            .card-front, .card-back {
+                min-height: 440px;
+            }
             
             .click-hint {
                 bottom: 100px; /* Adjusted for mobile - closer to card */
